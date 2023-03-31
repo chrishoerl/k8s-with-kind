@@ -178,6 +178,14 @@ Done renewing certificates. You must restart the kube-apiserver, kube-controller
 
 https://www.youtube.com/live/Cl-EWv3LmJA?feature=share
 
+* Install kind
+
+https://github.com/kubernetes-sigs/kind/releases/tag/v0.17.0
+
 * Kubernetes
 
 https://github.com/kubernetes/kubernetes/tree/v1.25.3#to-start-developing-k8s
+
+* How to install and use Docker on Ubuntu 22.04 (Ditigal Ocean)
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-22-04
