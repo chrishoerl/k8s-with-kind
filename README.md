@@ -42,7 +42,7 @@ git checkout v1.25.3
 * Therefore edit this file:
 
 ```shell
-vi GOPATH/src/k8s.io/kubernetes/cmd/kubeadm/app/constants
+vi GOPATH/src/k8s.io/kubernetes/cmd/kubeadm/app/constants.go
 ```
 
 * Change this line:
