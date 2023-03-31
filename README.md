@@ -33,7 +33,7 @@ cd kubernetes
 
 #### Checkout a specific version
 
-````shell
+```shell
 git checkout v1.25.3
 ```
 
@@ -61,6 +61,59 @@ https://github.com/kubernetes/kubernetes/blob/v1.25.3/cmd/kubeadm/app/constants/
 #### Create a node-image for kind
 
 ```shell
-# build with 1 single kind command
+# build with 1 single kind command (this will take a few minutes ~10-15min)
 kind build node-image --image=myname/node:v1.25.3-shorttime
 ```
+
+---
+
+**Optional / Background info**
+
+This is what kind does implicitely
+
+```shell
+make quick-release-images 'KUBE_EXTRA_WHAT=cmd/kubeadm cmd/kubectl cmd/kubelet' KUBE_VERBOSE=0 KUBE_BUILD_HYPERKUBE=n KUBE_BUILD_CONFORMANCE=n KUBE_BUILD_PLATFORMS=linux/amd64
+```
+
+---
+
+# list your final built docker image
+
+```shell
+docker image ls
+```
+
+---
+
+***Optional***
+
+Prepare a kind config
+
+---
+
+
+#### Create your kind cluster
+
+```shell 
+kind create cluster --config config --image=myname/node:v1.25.3-shorttime
+```
+
+#### Use kind
+
+* when the kind cluster is up and running jump right into your control-plane node from your local docker machine
+
+```shell
+docker exec -it kind-control-plane bash
+```
+
+* inside the control-plane node check certificate validity (for example of apiserver.crt)
+
+```shell
+root@kind-control-plane:
+cat /etc/kubernetes/pki/apiserver.crt | openssl  x509 -text | grep "Not "      
+
+Not Before: Mar 26 20:11:00 2023 GMT
+Not After : Mar 26 20:17:00 2023 GMT
+```
+
+* Result: you see the certificates issued by kubeadm are only valid for 6 minutes
