@@ -4,6 +4,8 @@
 
 ### Motivation
 
+#### The problem
+
 In 2019 I ran a bare-metal Kubernetes cluster (v1.13.x) and suddenly everything stopped working.
 Quickly I found out, the internal certificates of k8s were expired.
 
@@ -13,6 +15,26 @@ My first intention was to reset the date and time on the k8s nodes to play trick
 
 I could immediately reconnect to kube API with kubectl.
 But of course etcd complained that it was not perfectly time-synced. It was - of course - clear to me that this is not a final solution.
+
+#### The solution
+
+After searching on the web I found this [video](https://www.youtube.com/live/Cl-EWv3LmJA?feature=share) by Duffie Cooley on Youtube. He talks about the same scenario of expired certificates in k8s and how to renew them.
+
+I watched the whole 1.5 hours video at first and then tried to follow along each and every stepps of his on-screen guidance.
+He gives a lot of valuable background information.
+
+In the concrete situation most important information for me was to get the right kubeadm commands how to renew my certificates and how to copy
+the new certificates to the right directories on my cluster nodes.
+
+I had a problem which the guide in the video did not have. I was using k8s v1.13.x in which kubeadm command did not offer all comfortables parameters and all certificates ahd to be renewed manually. But I found it out.
+
+Finally after a few hours I had everything in place and I was able to restart my cluster components and reconnect via kubectl again!
+
+Perfect!!! Mission accomplished!
+
+#### The lesson learned and even more
+
+
 
 ### Prerequisites
 
