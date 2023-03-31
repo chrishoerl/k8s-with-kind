@@ -77,7 +77,7 @@ make quick-release-images 'KUBE_EXTRA_WHAT=cmd/kubeadm cmd/kubectl cmd/kubelet' 
 
 ---
 
-# list your final built docker image
+#### list your final built docker image
 
 ```shell
 docker image ls
@@ -117,3 +117,55 @@ Not After : Mar 26 20:17:00 2023 GMT
 ```
 
 * Result: you see the certificates issued by kubeadm are only valid for 6 minutes
+
+#### Wait for expiry
+
+* as soon as the certs are expired you get this message:
+
+```shell
+kubectl get pods
+Unable to connect to the server: x509: certificate has expired or is not yet valid: current time 2023-03-26T22:16:23+02:00 is after 2023-03-26T20:17:00Z
+```
+
+* Verify expiration of all certificates with kubeadm
+
+```shell
+root@kind-control-plane:/etc/kubernetes/pki# kubeadm certs check-expiration
+```
+
+```text
+[check-expiration] Reading configuration from the cluster...
+[check-expiration] FYI: You can look at this config file with 'kubectl -n kube-system get cm kubeadm-config -o yaml'
+[check-expiration] Error reading configuration from the Cluster. Falling back to default configuration
+
+CERTIFICATE                EXPIRES                  RESIDUAL TIME   CERTIFICATE AUTHORITY   EXTERNALLY MANAGED
+admin.conf                 Mar 26, 2023 20:17 UTC   <invalid>       ca                      no      
+apiserver                  Mar 26, 2023 20:17 UTC   <invalid>       ca                      no      
+apiserver-etcd-client      Mar 26, 2023 20:17 UTC   <invalid>       etcd-ca                 no      
+apiserver-kubelet-client   Mar 26, 2023 20:17 UTC   <invalid>       ca                      no      
+controller-manager.conf    Mar 26, 2023 20:17 UTC   <invalid>       ca                      no      
+etcd-healthcheck-client    Mar 26, 2023 20:17 UTC   <invalid>       etcd-ca                 no      
+etcd-peer                  Mar 26, 2023 20:17 UTC   <invalid>       etcd-ca                 no      
+etcd-server                Mar 26, 2023 20:17 UTC   <invalid>       etcd-ca                 no      
+front-proxy-client         Mar 26, 2023 20:17 UTC   <invalid>       front-proxy-ca          no      
+scheduler.conf             Mar 26, 2023 20:17 UTC   <invalid>       ca                      no      
+
+CERTIFICATE AUTHORITY   EXPIRES                  RESIDUAL TIME   EXTERNALLY MANAGED
+ca                      Mar 23, 2033 20:11 UTC   9y              no      
+etcd-ca                 Mar 23, 2033 20:11 UTC   9y              no      
+front-proxy-ca          Mar 23, 2033 20:11 UTC   9y              no
+```
+
+#### renew the certificate by
+
+* still withing control-plane node issue:
+
+```shell
+kubeadm certs renew all
+```
+
+* Result: you get this message
+
+```text
+Done renewing certificates. You must restart the kube-apiserver, kube-controller-manager, kube-scheduler and etcd, so that they can use the new certificates.
+```
