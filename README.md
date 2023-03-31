@@ -34,7 +34,21 @@ Perfect!!! Mission accomplished!
 
 #### The lesson learned and even more
 
+So you may ask: what have expired certificates to do with this guid of creating k8s node-images for the tool "kind"?
 
+Well, first after solving a nasty cluster situaion I was pretty happy and almost forgot about the circumstances and guidance that helped me through.
+
+In his video, Duffie explains and uses the tool kind to create a local k8s cluster.
+And to reproduce a k8s cluster of which all certificates have just expired he creates a node-image directly from kubernetes sources which has a manipulated version of kubeadm. It can only issue certificates no langer valid than 15 minutes.
+
+And I was wondering how he did this.
+
+So I watched the first ~30 Minutes over and over again and followed along his screen recording in every details.
+He explains how it is possible to create a k8s cluster with kind (which I knew before) but with customized code directly created from a "git clone'd" version of the upstream k8s sources.
+
+I found this pretty clever because with this "trick" you can build customized clusters which give you the possibility of testing and "breaking" all functions and features of Kubernetes for let's say: training purposes or to learn things about the very architecture or Kubernetes.
+
+So give it a try. Both, Kubernetes and kind.
 
 ### Prerequisites
 
