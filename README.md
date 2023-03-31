@@ -158,7 +158,7 @@ front-proxy-ca          Mar 23, 2033 20:11 UTC   9y              no
 
 #### renew the certificate by
 
-* still withing control-plane node issue:
+* still within control-plane node issue:
 
 ```shell
 kubeadm certs renew all
@@ -168,6 +168,25 @@ kubeadm certs renew all
 
 ```text
 Done renewing certificates. You must restart the kube-apiserver, kube-controller-manager, kube-scheduler and etcd, so that they can use the new certificates.
+```
+
+* Restart containers (still on kind control-plane)
+
+```shell
+cd /etc/kubernetes/manifests
+mv *.yaml ../
+
+# wait 1 minute
+
+mv ../*.yaml .
+
+# wait 1 minute
+```
+
+* Verify kube-apiserver, kube-controller-manager, kube-scheduler and etcd ware running
+
+```shell
+crictl ps
 ```
 
 ---
