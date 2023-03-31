@@ -4,7 +4,15 @@
 
 ### Motivation
 
-coming soon
+In 2019 I ran a bare-metal Kubernetes cluster (v1.13.x) and suddenly everything stopped working.
+Quickly I found out, the internal certificates of k8s were expired.
+
+Since it was a bare-metal cluster originally installed with kubespray / kubeadm by my predecessor in my former company I did not know wo much about it.
+
+My first intention was to reset the date and time on the k8s nodes to play tricks to the k8s API server and it seemed to work.
+
+I could immediately reconnect to kube API with kubectl.
+But of course etcd complained that it was not perfectly time-synced. It was - of course - clear to me that this is not a final solution.
 
 ### Prerequisites
 
