@@ -169,3 +169,15 @@ kubeadm certs renew all
 ```text
 Done renewing certificates. You must restart the kube-apiserver, kube-controller-manager, kube-scheduler and etcd, so that they can use the new certificates.
 ```
+
+---
+
+## Reference / Credits
+
+* Talk by Duffie Cooley - "TGI Kubernetes 077: All your certificates have expired"
+
+https://www.youtube.com/live/Cl-EWv3LmJA?feature=share
+
+* Kubernetes
+
+https://github.com/kubernetes/kubernetes/tree/v1.25.3#to-start-developing-k8s
